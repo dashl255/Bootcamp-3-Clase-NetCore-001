@@ -3,11 +3,18 @@ using Ejercicio_estructurado.Helpers.Models;
 using Ejercicio_estructurado.Helpers.Vars;
 using Ejercicio_estructurado.Models.Classroom;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Ejercicio_estructurado.Controllers
 {
+
+    // Agregar estudiante con:
+    //     - Id
+    //     - Nombre
+    //     - Edad
+
     [Route("api/[controller]")]
     [ApiController]
     public class ClassroomController : ControllerBase
@@ -18,15 +25,41 @@ namespace Ejercicio_estructurado.Controllers
         [HttpGet]
         public ResponseGeneralModel<List<ClassroomAllResponse>> Get()
         {
-            return new ResponseGeneralModel<List<ClassroomAllResponse>>(200, bll.getClassrooms(), "");
+            return new ResponseGeneralModel<List<ClassroomAllResponse>>(200, bll.GetClassrooms(), "");
         }
 
         // GET api/<ClassroomController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ResponseGeneralModel<ClassroomAllResponse?> Get(string id)
         {
-            return "value";
+            try
+            {
+                return bll.GetClassroomById(id);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseGeneralModel<ClassroomAllResponse?>(500, null, Message.errorGeneral);
+            }
         }
+        //public IActionResult Get(int id)
+        //{
+        //    try
+        //    {
+        //        ResponseGeneralModel<ClassroomAllResponse?> data = bll.GetClassroomById(id);
+        //        if(data.code == 200)
+        //        {
+        //            return Ok(data.data);
+        //        } else
+        //        {
+        //            return BadRequest(data.data);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Ok("");
+        //        //return new ResponseGeneralModel<ClassroomAllResponse?>(500, null, Message.errorGeneral);
+        //    }
+        //}
 
         // POST api/<ClassroomController>
         [HttpPost]
@@ -37,13 +70,13 @@ namespace Ejercicio_estructurado.Controllers
         }
 
         // PUT api/<ClassroomController>/5
-        [HttpPut("{index}")]
-        public ResponseGeneralModel<List<ClassroomModel>> Put(int index, [FromBody] ClassroomEditYearRequest value)
+        [HttpPut("{id}/year")]
+        public ResponseGeneralModel<List<ClassroomModel>> UpdateYearClassroom(string id, [FromBody] ClassroomEditYearRequest value)
         {
             bool isOk = false;
             try
             {
-                isOk = bll.EditYearClassroom(index, value.year);
+                isOk = bll.EditYearClassroom(id, value.year);
             }
             catch { isOk = false; }
 
@@ -52,8 +85,16 @@ namespace Ejercicio_estructurado.Controllers
 
         // DELETE api/<ClassroomController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ResponseGeneralModel<List<ClassroomModel>> Delete(string id)
         {
+            bool isOk = false;
+            try
+            {
+                isOk = bll.DeleteClassroom(id);
+            }
+            catch { isOk = false; }
+
+            return new ResponseGeneralModel<List<ClassroomModel>>((isOk) ? 200 : 500, null, (isOk) ? Message.deleteClassroomOk : Message.deleteClassroomError);
         }
     }
 }
