@@ -6,6 +6,12 @@
         public T data { get; set; }
         public string message { get; set; }
 
+        public ResponseGeneralModel(int code, string message)
+        {
+            this.code = code;
+            this.message = message;
+        }
+
         public ResponseGeneralModel(int code, T data, string message)
         {
             this.code = code;

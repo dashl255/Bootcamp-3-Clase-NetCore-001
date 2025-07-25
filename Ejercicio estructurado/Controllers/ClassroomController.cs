@@ -2,8 +2,10 @@
 using Ejercicio_estructurado.Helpers.Models;
 using Ejercicio_estructurado.Helpers.Vars;
 using Ejercicio_estructurado.Models.Classroom;
+using Ejercicio_estructurado.Validator.Classroom;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Text.RegularExpressions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,12 +15,13 @@ namespace Ejercicio_estructurado.Controllers
     // Agregar estudiante con:
     //     - Id
     //     - Nombre
-    //     - Edad
+    //     - Año
 
     [Route("api/[controller]")]
     [ApiController]
     public class ClassroomController : ControllerBase
     {
+        ClassroomValidate validate = new ClassroomValidate();
         ClassroomBll bll = new ClassroomBll();
 
         // GET: api/<ClassroomController>
@@ -26,6 +29,13 @@ namespace Ejercicio_estructurado.Controllers
         public ResponseGeneralModel<List<ClassroomAllResponse>> Get()
         {
             return new ResponseGeneralModel<List<ClassroomAllResponse>>(200, bll.GetClassrooms(), "");
+        }
+
+        [HttpGet("prueba/{dato}")]
+        public bool GetPrueba(string dato)
+        {
+            Regex regEx = new Regex(VarHelper.regExParamString);
+            return regEx.IsMatch(dato);
         }
 
         // GET api/<ClassroomController>/5
@@ -65,8 +75,16 @@ namespace Ejercicio_estructurado.Controllers
         [HttpPost]
         public ResponseGeneralModel<List<ClassroomModel>> Post([FromBody] ClassroomAddRequest item)
         {
-            bool isOk = bll.AddClassroom(item);
-            return new ResponseGeneralModel<List<ClassroomModel>>((isOk) ? 200 : 500, null, (isOk) ? Message.addClassroomOk : Message.addClassroomError);
+            try
+            {
+                ResponseGeneralModel<List<ClassroomModel>> validateD = validate.AddClassroom(item);
+                if (validateD.code != 200) return validateD;
+
+                return bll.AddClassroom(item);
+            } catch
+            {
+                return new ResponseGeneralModel<List<ClassroomModel>>(500, null, Message.errorGeneral);
+            }
         }
 
         // PUT api/<ClassroomController>/5

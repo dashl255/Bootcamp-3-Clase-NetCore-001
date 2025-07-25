@@ -1,6 +1,7 @@
 ﻿using Ejercicio_estructurado.Helpers.Models;
 using Ejercicio_estructurado.Helpers.Vars;
 using Ejercicio_estructurado.Models.Classroom;
+using Ejercicio_estructurado.Models.Student;
 using Ejercicio_estructurado.Repository;
 
 namespace Ejercicio_estructurado.Bll
@@ -35,11 +36,21 @@ namespace Ejercicio_estructurado.Bll
             return new ResponseGeneralModel<ClassroomAllResponse?>(200, response, Message.getClassroomByIdOk);
         }
 
-        public bool AddClassroom(ClassroomAddRequest request)
+        public ResponseGeneralModel<List<ClassroomModel>> AddClassroom(ClassroomAddRequest request)
         {
-            ClassroomModel model = new ClassroomModel(request.name, request.year);
+            ClassroomModel modelF = repository.GetClassroomByName(request.name);
 
-            return repository.AddNewClassroom(model);
+            if(modelF == null)
+            {
+                ClassroomModel model = new ClassroomModel(request.name, request.year);
+
+                bool isAdd = repository.AddNewClassroom(model);
+
+                return new ResponseGeneralModel<List<ClassroomModel>>((isAdd) ? 200 : 500, null, (isAdd) ? Message.addClassroomOk : Message.addClassroomError);
+            } else
+            {
+                return new ResponseGeneralModel<List<ClassroomModel>>(400, null, Message.addClassroomDuplicate);
+            }
         }
 
 
