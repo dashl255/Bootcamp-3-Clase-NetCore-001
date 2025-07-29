@@ -1,5 +1,7 @@
-﻿using Ejercicio_estructurado.Helpers.Vars;
+﻿using Ejercicio_estructurado.Helpers.Models;
+using Ejercicio_estructurado.Helpers.Vars;
 using Ejercicio_estructurado.Models.Classroom;
+using Ejercicio_estructurado.Models.ClassroomStudent;
 using Ejercicio_estructurado.Models.Student;
 using Ejercicio_estructurado.Repository;
 
@@ -27,6 +29,21 @@ namespace Ejercicio_estructurado.Bll
             StudentModel model = new StudentModel(request.name, request.lastName, request.year);
 
             return repository.AddNewStudent(model);
+        }
+
+        public ResponseGeneralModel<string> RegisterStudentInClassroom(ClassroomStudentRegisterRequest request)
+        {
+            StudentModel? studentFind = repository.GetStudentsById(request.studentId);
+            if (studentFind == null) return new ResponseGeneralModel<string>(400, null, Message.saveClassromStudentErrorIdStudent, Message.saveClassromStudentErrorIdStudent);
+
+            ClassroomModel? classroomFind = (new ClassroomRepository()).GetClassroomById(request.classroomId);
+            if (classroomFind == null) return new ResponseGeneralModel<string>(400, null, Message.saveClassromStudentErrorIdClassroom, Message.saveClassromStudentErrorIdClassroom);
+
+
+            ClassroomStudentModel modelSave = new ClassroomStudentModel(request.classroomId, request.studentId);
+            bool isOk = (new ClassroomStudentRepository()).SaveClassroomStudent(modelSave);
+
+            return new ResponseGeneralModel<string>((isOk) ? 200 : 500, null, (isOk) ? Message.saveClassromStudentOk : Message.errorGeneral, "");
         }
 
 

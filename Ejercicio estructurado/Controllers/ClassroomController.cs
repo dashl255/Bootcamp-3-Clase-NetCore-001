@@ -31,6 +31,12 @@ namespace Ejercicio_estructurado.Controllers
             return new ResponseGeneralModel<List<ClassroomAllResponse>>(200, bll.GetClassrooms(), "");
         }
 
+        [HttpGet("students")]
+        public ResponseGeneralModel<List<ClassroomWithStudentReponse>> GetWithStudents()
+        {
+            return new ResponseGeneralModel<List<ClassroomWithStudentReponse>>(200, bll.ListClassroomWithStudent(), "");
+        }
+
         [HttpGet("prueba/{dato}")]
         public bool GetPrueba(string dato)
         {

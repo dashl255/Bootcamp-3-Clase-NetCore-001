@@ -14,16 +14,18 @@ namespace Ejercicio_estructurado.Helpers.Helper
             {
                 if (!MaxLength(Value, Max ?? 0)) return new ResponseGeneralModel<T>(
                     400,
-                    Message.ErrorParamsGeneral
-                    //MsjMaxV ?? "El parametro " + Name + " excede el límite de " + Max + " caracteres"
+                    null,
+                    Message.ErrorParamsGeneral,
+                    MsjMaxV ?? "El parametro '" + Name + "' excede el límite de " + Max + " caracteres"
                 );
             }
             if (Min != null)
             {
                 if (!MinLength(Value, Min ?? 0)) return new ResponseGeneralModel<T>(
                     400,
-                    Message.ErrorParamsGeneral
-                    //MsjMinV ?? "El parametro " + Name + " debe tener un mínimo de " + Min + " caracteres"
+                    null,
+                    Message.ErrorParamsGeneral,
+                    MsjMinV ?? "El parametro '" + Name + "' debe tener un mínimo de " + Min + " caracteres"
                 );
             }
 
@@ -36,8 +38,9 @@ namespace Ejercicio_estructurado.Helpers.Helper
                         bool isMsjPers = ListMsjRegExp != null ? ListMsjRegExp.Count >= (i - 1) : false;
                         return new ResponseGeneralModel<T>(
                             400,
-                            Message.ErrorParamsGeneral
-                            //isMsjPers ? ListMsjRegExp[i] : "El parametro " + Name + " no cumple con la expresión regular " + ListRegExp[i]
+                            null,
+                            Message.ErrorParamsGeneral,
+                            isMsjPers ? ListMsjRegExp[i] : "El parametro '" + Name + "' no cumple con la expresión regular " + ListRegExp[i]
                         );
                     }
                 }

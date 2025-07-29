@@ -1,6 +1,7 @@
 ﻿using Ejercicio_estructurado.Helpers.Models;
 using Ejercicio_estructurado.Helpers.Vars;
 using Ejercicio_estructurado.Models.Classroom;
+using Ejercicio_estructurado.Models.ClassroomStudent;
 using Ejercicio_estructurado.Models.Student;
 using Ejercicio_estructurado.Repository;
 
@@ -34,6 +35,38 @@ namespace Ejercicio_estructurado.Bll
             ClassroomAllResponse response = ModelToResponse(model);
 
             return new ResponseGeneralModel<ClassroomAllResponse?>(200, response, Message.getClassroomByIdOk);
+        }
+
+        public List<ClassroomWithStudentReponse> ListClassroomWithStudent()
+        {
+            List<ClassroomWithStudentReponse> response = new List<ClassroomWithStudentReponse>();
+
+            List<ClassroomModel> listClassroom = repository.GetList();
+
+            foreach(ClassroomModel model in listClassroom)
+            {
+                List<StudentAllResponse> studentResponse = new List<StudentAllResponse>();
+
+                List<ClassroomStudentModel> listClaStud = (new ClassroomStudentRepository()).GetStudentByClassroomId(model.GetId());
+                foreach(ClassroomStudentModel classStud in listClaStud)
+                {
+                    StudentModel studModel = (new StudentRepository()).GetStudentsById(classStud.GetStudent());
+                    StudentAllResponse studRespModel = new StudentAllResponse();
+                    studRespModel.id = studModel.GetId();
+                    studRespModel.name = studModel.GetName();
+                    studRespModel.lastName = studModel.GetLastName();
+                    studRespModel.year = studModel.GetYear();
+                    studentResponse.Add(studRespModel);
+                }
+
+                ClassroomWithStudentReponse responseModel = new ClassroomWithStudentReponse();
+                responseModel.classromId = model.GetId();
+                responseModel.name = model.GetName();
+                responseModel.year = model.GetYear();
+                responseModel.students = studentResponse;
+                response.Add(responseModel);
+            }
+            return response;
         }
 
         public ResponseGeneralModel<List<ClassroomModel>> AddClassroom(ClassroomAddRequest request)

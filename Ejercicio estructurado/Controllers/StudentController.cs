@@ -2,6 +2,7 @@
 using Ejercicio_estructurado.Helpers.Models;
 using Ejercicio_estructurado.Helpers.Vars;
 using Ejercicio_estructurado.Models.Classroom;
+using Ejercicio_estructurado.Models.ClassroomStudent;
 using Ejercicio_estructurado.Models.Student;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,14 @@ namespace Ejercicio_estructurado.Controllers
         {
             bool isOk = bll.AddStudent(item);
             return new ResponseGeneralModel<List<StudentAllResponse>>((isOk) ? 200 : 500, null, (isOk) ? Message.addClassroomOk : Message.addClassroomError);
+        }
+
+        [HttpPost("register")]
+        public ResponseGeneralModel<string> RegisterStudent([FromBody] ClassroomStudentRegisterRequest request)
+        {
+            return bll.RegisterStudentInClassroom(request);
+            //bool isOk = bll.RegisterStudentInClassroom(request);
+            //return new ResponseGeneralModel<string>((isOk) ? 200 : 500, null, (isOk) ? Message.addClassroomOk : Message.addClassroomError);
         }
 
         // PUT api/<StudentController>/5
