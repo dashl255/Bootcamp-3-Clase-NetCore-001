@@ -17,7 +17,11 @@
         {
             this.code = code;
             this.message = message;
-            this.messageDev = messageDev;
+            bool isDebug = (new ConfigurationBuilder()).AddJsonFile("appsettings.json").Build().GetSection("isDebug").Get<bool>();
+            if (isDebug)
+            {
+                this.messageDev = messageDev;
+            }
         }
 
         public ResponseGeneralModel(int code, T data, string message)

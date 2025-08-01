@@ -19,10 +19,12 @@ namespace Ejercicio_estructurado.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -51,6 +53,15 @@ namespace Ejercicio_estructurado.Controllers
             //}
 
             //return listFilter;
+            //    var tmp1 = _configuration.GetSection("MiConfiguracion");
+            //    return new
+            //    {
+            //        key = tmp1.GetSection("ApiKey").Get<int>(),
+            //        url = tmp1.GetSection("UrlBase").Get<string>(),
+            //        numbers = _configuration.GetSection("numbersAllow").Get<List<int>>()
+            //};
+
+            return (new ConfigurationBuilder()).AddJsonFile("appsettings.json").Build().GetSection("numbersAllow").Get<List<int>>();
 
             StudentAllResponse model = new StudentAllResponse();
             model.id = "001";

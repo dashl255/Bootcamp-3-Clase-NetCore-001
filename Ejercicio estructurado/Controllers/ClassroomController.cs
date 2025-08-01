@@ -1,4 +1,4 @@
-﻿using Ejercicio_estructurado.Bll;
+﻿using Ejercicio_estructurado.Bll.Classroom;
 using Ejercicio_estructurado.Helpers.Models;
 using Ejercicio_estructurado.Helpers.Vars;
 using Ejercicio_estructurado.Models.Classroom;
@@ -21,8 +21,15 @@ namespace Ejercicio_estructurado.Controllers
     [ApiController]
     public class ClassroomController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
         ClassroomValidate validate = new ClassroomValidate();
-        ClassroomBll bll = new ClassroomBll();
+        private readonly IClassroomBll bll;
+
+        public ClassroomController(IConfiguration configuration, IClassroomBll classroomBll)
+        {
+            _configuration = configuration;
+            bll = classroomBll;
+        }
 
         // GET: api/<ClassroomController>
         [HttpGet]

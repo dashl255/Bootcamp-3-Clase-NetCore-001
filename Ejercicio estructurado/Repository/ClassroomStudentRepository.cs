@@ -14,16 +14,14 @@ namespace Ejercicio_estructurado.Repository
             return true;
         }
 
+        public List<ClassroomStudentModel> GetStudent()
+        {
+            return classroomStudent;
+        }
+
         public List<ClassroomStudentModel> GetStudentByClassroomId(string classroomId)
         {
-            List<ClassroomStudentModel> reponse = new List<ClassroomStudentModel>();
-            foreach (var classStud in classroomStudent) {
-                if(classStud.GetClassroom() == classroomId)
-                {
-                    reponse.Add(classStud);
-                }
-            }
-            return reponse;
+            return classroomStudent.Where((classStud) => classStud.GetClassroom() == classroomId).ToList();
         }
     }
 }

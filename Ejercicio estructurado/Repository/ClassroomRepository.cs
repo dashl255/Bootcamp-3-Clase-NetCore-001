@@ -16,28 +16,12 @@ namespace Ejercicio_estructurado.Repository
 
         public ClassroomModel? GetClassroomById(string id)
         {
-            foreach (var model in classrooms)
-            {
-                if(model.GetId() == id)
-                {
-                    return model;
-                }
-            }
-
-            return null;
+            return classrooms.FirstOrDefault((model) => model.GetId() == id);
         }
 
         public ClassroomModel? GetClassroomByName(string name)
         {
-            foreach (var model in classrooms)
-            {
-                if (model.GetName() == name)
-                {
-                    return model;
-                }
-            }
-
-            return null;
+            return classrooms.FirstOrDefault((model) => model.GetName() == name);
         }
 
         public bool EditYearClassroom(string id, int year)

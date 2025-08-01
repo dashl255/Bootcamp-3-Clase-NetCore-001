@@ -13,15 +13,7 @@ namespace Ejercicio_estructurado.Repository
 
         public StudentModel? GetStudentsById(string id)
         {
-            foreach (var model in students)
-            {
-                if (model.GetId() == id)
-                {
-                    return model;
-                }
-            }
-
-            return null;
+            return students.FirstOrDefault((model) => model.GetId() == id);
         }
 
         public bool EditYearStudent(string id, int year)
