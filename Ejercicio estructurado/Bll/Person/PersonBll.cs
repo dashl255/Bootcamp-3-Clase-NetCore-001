@@ -24,7 +24,7 @@ namespace Ejercicio_estructurado.Bll.Person
         {
             DeviceModel deviceFind = (new DeviceRepository()).GetDeviceById(requestModel.deviceID);
             if(deviceFind == null) throw new Exception("No existe");
-            return repository.AddDeviceToPerson(idPerson, deviceFind ?? new DeviceModel(""));
+            return repository.AddDeviceToPerson(idPerson, deviceFind);
         }
 
         public PersonAllResponse MapModelPerson(PersonModel personModel)

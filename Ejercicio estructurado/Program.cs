@@ -1,4 +1,6 @@
 using Ejercicio_estructurado.Bll.Classroom;
+using Ejercicio_estructurado.Bll.Team;
+using Ejercicio_estructurado.Repository.Team;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,9 @@ builder.Services.AddSwaggerGen();
 // ::: Interfaces - Inicio
 // Bll
 builder.Services.AddScoped<IClassroomBll, ClassroomBll>();
+builder.Services.AddScoped<ITeamBll, TeamBll>();
+// Repository
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 // ::: Interfaces - Fin
 
 
