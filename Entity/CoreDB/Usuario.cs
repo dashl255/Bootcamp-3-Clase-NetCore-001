@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ERP.CoreDB;
+namespace Entity.CoreDB;
 
 public partial class Usuario
 {
@@ -22,6 +22,7 @@ public partial class Usuario
     public int? UsuIdAct { get; set; }
 
     public string Clave { get; set; } = null!;
+
     public string Email { get; set; } = null!;
 
     public virtual ICollection<MovimientoCab> MovimientoCabs { get; set; } = new List<MovimientoCab>();
