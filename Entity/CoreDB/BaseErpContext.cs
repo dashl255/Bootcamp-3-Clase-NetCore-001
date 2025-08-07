@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace ERP.CoreDB;
+namespace Entity.CoreDB;
 
 public partial class BaseErpContext : DbContext
 {
+    public BaseErpContext()
+    {
+    }
 
     public BaseErpContext(DbContextOptions<BaseErpContext> options)
         : base(options)
@@ -66,6 +68,10 @@ public partial class BaseErpContext : DbContext
     public virtual DbSet<UsuarioPermiso> UsuarioPermisos { get; set; }
 
     public virtual DbSet<UsuarioRol> UsuarioRols { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=VMT-JMORAN\\SQLEXPRESS;Database=BASE_ERP;Trusted_Connection=True;TrustServerCertificate=Yes");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -895,12 +901,6 @@ public partial class BaseErpContext : DbContext
             entity.Property(e => e.UsuId)
                 .ValueGeneratedNever()
                 .HasColumnName("usu_id");
-            entity.Property(e => e.EmpresaId).HasColumnName("empresa_id");
-            entity.Property(e => e.Estado).HasColumnName("estado");
-            entity.Property(e => e.FechaHoraAct)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("fecha_hora_act");
             entity.Property(e => e.Clave)
                 .HasMaxLength(255)
                 .IsUnicode(false)
@@ -909,6 +909,12 @@ public partial class BaseErpContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("email");
+            entity.Property(e => e.EmpresaId).HasColumnName("empresa_id");
+            entity.Property(e => e.Estado).HasColumnName("estado");
+            entity.Property(e => e.FechaHoraAct)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("fecha_hora_act");
             entity.Property(e => e.FechaHoraReg)
                 .HasMaxLength(255)
                 .IsUnicode(false)

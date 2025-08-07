@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ejercicio estructurado", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP", "ERP\ERP.csproj", "{CCDB9606-BE63-4581-8BBB-BFEE027EFBAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{1D8C84C0-7745-4190-9F91-BD521B438C9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CCDB9606-BE63-4581-8BBB-BFEE027EFBAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCDB9606-BE63-4581-8BBB-BFEE027EFBAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCDB9606-BE63-4581-8BBB-BFEE027EFBAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D8C84C0-7745-4190-9F91-BD521B438C9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D8C84C0-7745-4190-9F91-BD521B438C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D8C84C0-7745-4190-9F91-BD521B438C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D8C84C0-7745-4190-9F91-BD521B438C9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
