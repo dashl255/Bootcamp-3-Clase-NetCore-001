@@ -1,4 +1,4 @@
-using ERP.Bll.Security.Authentication
+using ERP.Bll.Security.Authentication;
 using ERP.Bll.User;
 using ERP.CoreDB;
 using Microsoft.EntityFrameworkCore;
