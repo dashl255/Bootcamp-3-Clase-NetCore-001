@@ -57,5 +57,21 @@ namespace ERP.Helper.Helper
 
             return JWTG.GenerateJwt(dataJwt);
         }
+
+        public ResponseGeneralModel<T> DecodeJwtSession(string token)
+        {
+            IConfigurationSection section = GetConfiguration().GetSection("jwtSession");
+
+            JwtGenerator<T> JWTG = new JwtGenerator<T>(
+                SecretKey: section.GetValue<string>("secretKey"),
+                Name: section.GetValue<string>("name"),
+                Rol: section.GetValue<string>("rol"),
+                Issuer: section.GetValue<string>("issuer"),
+                Audience: section.GetValue<string>("audience"),
+                DurationSec: section.GetValue<int>("durationSec")
+            );
+
+            return JWTG.DeserializeJwt(token);
+        }
     }
 }

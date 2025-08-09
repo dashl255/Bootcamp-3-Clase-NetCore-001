@@ -1,5 +1,6 @@
 using ERP.Bll.User;
 using ERP.CoreDB;
+using ERP.Filters;
 using ERP.Helper.Data;
 using ERP.Helper.Helper;
 using ERP.Helper.Models;
@@ -13,6 +14,7 @@ namespace ERP.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //[ServiceFilter(typeof(SessionUserFilter))]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
