@@ -73,5 +73,19 @@ namespace ERP.Helper.Helper
 
             return JWTG.DeserializeJwt(token);
         }
+
+       
+        public static bool VerifyPassword(string plaintextPassword, string encryptedDatabasePassword)
+        {
+           
+            var decryptedResult = MethodsHelper<string>.DesencryptPassUser(encryptedDatabasePassword);
+
+            if (decryptedResult.code == 200)
+            {
+                return decryptedResult.message == plaintextPassword;
+            }
+
+            return false;
+        }
     }
 }
