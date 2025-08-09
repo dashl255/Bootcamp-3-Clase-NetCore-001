@@ -1,6 +1,8 @@
 using ERP.Bll.User;
 using ERP.CoreDB;
+using ERP.Filters;
 using ERP.Helper.Data;
+using ERP.Helper.Helper;
 using ERP.Helper.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -12,6 +14,7 @@ namespace ERP.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //[ServiceFilter(typeof(SessionUserFilter))]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -26,6 +29,12 @@ namespace ERP.Controllers
         {
             _logger = logger;
             this.userBll = userBll;
+        }
+
+        [HttpGet("EncryptPass")]
+        public ResponseGeneralModel<string> EncryptPass(string text)
+        {
+            return (new MethodsHelper<string>()).EncryptDataByMethod("passUser", text);
         }
 
         [HttpGet("testDb")]

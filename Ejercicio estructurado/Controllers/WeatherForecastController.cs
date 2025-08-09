@@ -43,6 +43,8 @@ namespace Ejercicio_estructurado.Controllers
         [HttpGet("Test")]
         public dynamic GetTest()
         {
+
+
             //List<string> listFilter = new List<string>();
             //foreach (string item in Summaries2)
             //{

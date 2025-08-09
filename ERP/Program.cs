@@ -1,6 +1,8 @@
 using ERP.Bll.Security.Authentication;
+using ERP.Bll.Security.Profile;
 using ERP.Bll.User;
 using ERP.CoreDB;
+using ERP.Filters;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,8 +22,15 @@ builder.Services.AddDbContext<BaseErpContext>(options =>
 // :: Interfaces - aplicativo (inicio)
 // Bll
 builder.Services.AddScoped<IAuthenticationBll, AuthenticationBll>();
+builder.Services.AddScoped<IProfileBll, ProfileBll>();
 builder.Services.AddScoped<IUserBll, UserBll>();
 // :: Interfaces - aplicativo (fin)
+
+
+builder.Services.AddHttpContextAccessor();
+
+// Filter
+builder.Services.AddScoped<SessionUserFilter>();
 
 var app = builder.Build();
 

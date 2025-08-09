@@ -1,4 +1,6 @@
-﻿namespace ERP.Helper.Models
+﻿using System.Diagnostics;
+
+namespace ERP.Helper.Models
 {
     public class ResponseGeneralModel<T>
     {
@@ -40,6 +42,17 @@
             this.code = code;
             this.data = data;
             this.message = message;
+        }
+
+        public ResponseGeneralModel(string message, string messageDev, int code)
+        {
+            this.code = code;
+            this.message = message;
+            bool isDebug = (new ConfigurationBuilder()).AddJsonFile("appsettings.json").Build().GetSection("isDebug").Get<bool>();
+            if (isDebug)
+            {
+                this.messageDev = messageDev;
+            }
         }
     }
 }
